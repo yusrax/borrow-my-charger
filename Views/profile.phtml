@@ -1,0 +1,185 @@
+<?php session_start(); ?>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="<?php echo $_SESSION["avatar"]; ?>"><span class="font-weight-bold"></div>
+        </div>
+
+        <!--displaying user details-->
+        <div class="col-md-5 border-right">
+            <div class=" justify-content-between align-items-center mb-3">
+                <h4 class="text-center">Profile</h4>
+            </div>
+            <table class="table" id="user-table">
+                <tr><td><h6>Name</h6></td><td><?php echo $_SESSION["name"];?></td></tr>
+                <tr><td><h6>Username</h6></td><td><?php echo $_SESSION["email"];?></td></tr>
+                <tr><td><h6>Phone Number</h6></td><td><?php echo $_SESSION["number"];?></td></tr>
+            </table>
+
+            <div class="mt-5 text-center">
+                    <div class="text-center">
+                        <button id="edit-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Edit</button>
+                    </div>
+            </div>
+
+                <!--displaying form to edit user details-->
+            <div class="p-3 py-5">
+                <form id="edit-form" style="display: none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <div class="col-md-12"><label class="labels">Name</label><input id="name-input" type="text" name="name" class="form-control" placeholder="<?php echo $_SESSION["name"];?>" ></div><br>
+                <div class="col-md-12"><label class="labels">Username</label><input id="email-input" type="email" name="email" class="form-control" placeholder="<?php echo $_SESSION["email"];?>" ></div><br>
+                <div class="col-md-12"><label class="labels">Phone Number</label><input id="number-input" type="text" name="number" class="form-control" placeholder="<?php echo $_SESSION["number"];?>"  maxlength="11"></div><br>
+                    <div class="mt-5 text-center">
+                        <input class="btn btn-primary profile-button" type="submit" name="Save" value="Save">
+                        <button id="canceledit-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-4 align-items-center">
+            <div class="p-3 py-5 ">
+                <?php if (!isset($_SESSION['Address'])) { ?>
+                        <!--register button when user does not have a Charge Point registered-->
+                <div class="text-center">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <p>Have a Charge Point?</p>
+                        <div class="mt-5 text-center">
+                            <div class="text-center">
+                                <button id="register-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                        <!--form for user to register Charge Point-->
+                    <div class="text-center">
+                        <img src="images/electricbolt.jpg"
+                             style="width: 100px;" alt="logo">
+                        <h4 >Register Charge Point</h4><br>
+                    </div>
+
+                    <form id="register-form" style="display: none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+
+                        <div class="form-outline mb-4">
+                            <input type="text" name="address1" class="form-control"
+                                   placeholder="Address" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="text" name="address2" class="form-control"
+                                   placeholder="City" />
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" name="postcode" class="form-control" placeholder="Postcode"
+                                            max="8">
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="lat" class="form-control" placeholder="Latitude"
+                                            max="4" >
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="lng" class="form-control" placeholder="Longitude"
+                                            max="4">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="text" name="cost" class="form-control" placeholder="Cost (£)"
+                                   >
+                        </div>
+
+                        <div class="text-center pt-1 mb-5 pb-1">
+                            <input class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" name="submit" value="submit">
+                            <button id="cancelregister-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Cancel</button>
+                        </div>
+                    </form>
+
+                <?php } else { ?>
+                        <!--displaying Charge Point details-->
+            <div class=" justify-content-between align-items-center mb-3">
+                <h4 class="text-center">Charge Point</h4>
+            </div>
+            <table class="table" id="cp-table">
+                <tr><td><h6>Address</h6></td><td><?php echo $_SESSION["Address"];?></td></tr>
+                <tr><td><h6>City</h6></td><td><?php echo $_SESSION["City"];?></td></tr>
+                <tr><td><h6>Postcode</h6></td><td><?php echo $_SESSION["Postcode"];?></td></tr>
+                <tr><td><h6>Location</h6></td><td><?php echo '('.$_SESSION["Lat"].','. $_SESSION["Lng"].')';?></td></tr>
+                <tr><td><h6>Cost</h6></td><td><?php echo '£'.$_SESSION["Cost"];?></td></tr>
+            </table>
+                        <div class="mt-5 text-center">
+                            <div class="text-center">
+                                <button id="update-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Update</button>
+                            </div>
+                        </div>
+
+                        <!--form to edit Charge Point details-->
+
+
+                        <form id="editcp-form" style="display: none;" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+
+                            <div class="text-center">
+                                <img src="images/electricbolt.jpg"
+                                     style="width: 100px;" alt="logo">
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="ad1-input" name="address1" class="form-control"
+                                       placeholder="<?php echo $_SESSION["Address"];?>" />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="ad2-input" name="address2" class="form-control"
+                                       placeholder="<?php echo $_SESSION["City"];?>" />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" id="postcode-input" name="postcode" class="form-control" placeholder="<?php echo $_SESSION["Postcode"];?>"
+                                                max="8">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="lat-input" name="lat" class="form-control" placeholder="<?php echo $_SESSION["Lat"];?>"
+                                                max="4" >
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="lng-input" name="lng" class="form-control" placeholder="<?php echo $_SESSION["Lng"];?>"
+                                                max="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="cost-input" name="cost" class="form-control" placeholder="<?php echo '£'.$_SESSION["Cost"];?>"
+                                       >
+                            </div>
+
+                            <div class="text-center pt-1 mb-5 pb-1">
+                                <input class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" name="Done" value="Done">
+                                <button id="canceleditcp-btn" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Cancel</button>
+                            </div>
+                        </form>
+
+                <?php }  ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+    <script src="js/profile.js"></script>
+    <script src="js/forms.js"></script>
+
+
+<?php require('template/footer.phtml') ?>

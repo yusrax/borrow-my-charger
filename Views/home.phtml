@@ -1,0 +1,119 @@
+<?php require('template/header.phtml') ?>
+    <!--staring session to use session variables-->
+<?php session_start(); ?>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+
+
+    <script src="js/livesearch.js?v=<?php echo time(); ?>"></script>
+
+    <!-- Adding the chargePointDataJson variable  -->
+    <script>
+        const chargePointDataJson = <?php echo $view->chargePointDataSetJson; ?>;
+    </script>
+
+
+
+
+    <script src="js/map.js?v=<?php echo time(); ?>" defer></script>
+
+
+
+    <div id="alertContainer" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>There are no ChargePoints near you!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+
+    <!--search form to get search queries-->
+    <nav class="navbar bg-light">
+        <div class="container-md">
+            <form class="mx-auto">
+                <div class="input-group">
+                    <input id="searchInput" type="text" name="query" class="form-control" placeholder="Search" oninput="liveSearch.onSearchInput(chargePointDataJson, map);" />
+
+                    <div class="dropdown">
+                        <ul id="suggestionList" class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="display: none;"></ul>
+                    </div>
+                    <button id="searchBtn" class="btn btn-outline-primary" onclick="event.preventDefault(); liveSearch.onSearchInput(chargePointDataJson, map); this.blur();">Search</button>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <div class="form-check form-switch mx-auto">
+                <input class="form-check-input" type="checkbox" id="viewToggle">
+                <label class="form-check-label" for="viewToggle">Map View</label>
+            </div>
+        </div>
+    </nav>
+
+    <!-- List View Section -->
+    <div id="listView">
+        <!--displaying all charge points-->
+
+        <div id="chargePointList">
+            <?php
+            echo '<div class="row row-cols-1 row-cols-md-5 g-4" >';
+            foreach ($view->chargePointDataSet as $chargePoint) {
+                echo '<div id="chargePoint" class="col chargePoint">
+    <div class="card align-items-center text-center">
+    <div class="card-body">
+            <div><img class="rounded-circle " width="100px" src="' . $chargePoint->getPhoto() . '">
+            <h5 class="card-title">' . $chargePoint->getCost() . '</h5></div>
+        <p class="card-text">
+        ' . $chargePoint->getAddress1() . '<br>
+        ' . $chargePoint->getAddress2() . '<br>
+        ' . $chargePoint->getPostcode() . '<br><br>
+        ' . $chargePoint->getName() . '<br>
+        ' . $chargePoint->getPhoneNo() . '
+        </p>
+        <a href="request.php?chargeid='. $chargePoint->getChargeID() .'"><button type="button" class="btn btn-outline-primary">Request</button></a>
+        </div>
+        </div>
+    </div>';
+            }
+            echo '</div>'; // Close the row div
+            ?>
+        </div>
+
+        <div class="container">
+            <div id="paginationContainer" class="d-flex justify-content-center mt-3"></div>
+        </div>
+    </div>
+
+    <!-- Map View Section -->
+
+    <div id="mapView" style="display: none;">
+        <div id="map" style="width: 100%; height: 500px;"></div>
+        <div class="d-flex justify-content-center text-center my-3">
+        <button id="requestBtn"  class=" btn btn-primary" disabled>Request ChargePoint</button>
+        </div>
+    </div>
+
+
+    <script src="js/pagination.js"></script>
+    <script>
+        // ...
+        document.addEventListener('DOMContentLoaded', function () {
+            initPagination();
+            liveSearch.onSearchInput(chargePointDataJson, map);
+        });
+        initPagination();
+    </script>
+
+
+
+
+
+
+
+<?php require('template/footer.phtml') ?>

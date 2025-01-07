@@ -1,0 +1,95 @@
+<?php require('template/header.phtml') ?>
+
+<!--alert displayed when user requests a ChargePoint-->
+<?php if (isset($_POST['Request'])) { ?>
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Request Sent!</h4>
+        <p>Your request has been sent successfully. The owner will reply you as soon as possible</p>
+    </div>
+<?php }  ?>
+<!--Charge Point request form-->
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-10">
+                <div class="card text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <img src="images/electricbolt.png"
+                                         style="width: 100px;" alt="logo">
+                                    <h4>Request Charger</h4>
+                                </div>
+
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" >
+
+
+                                    <div class="form-outline mb-4">
+                                        <label>Date</label>
+                                        <input type="date" name="date" class="form-control" placeholder="Date">
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label>Time</label>
+                                        <input type="time" name="time" class="form-control" placeholder="Time">
+                                    </div>
+
+                                    <div class="text-center pt-1 mb-5 pb-1">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label>Hours</label>
+                                                <input type="number" name="hours" class="form-control" placeholder="0">
+                                            </div>
+                                            <div class="col">
+                                                <label>Energy</label>
+                                                <input type="number" name="energy" class="form-control" placeholder="kW">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <input class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" name="Request" value="Request" >
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--Charge Point details display-->
+                            <div class="col-lg-6 d-flex align-items-center" style="background-color:#d0efff;">
+                                <div class="text-black mx-auto ">
+                                    <div class="text-center">
+                                        <img class="rounded-circle" src="<?php echo $view->chargePoints->getPhoto(); ?>"
+                                             style="width: 100px;" alt="logo">
+                                    </div>
+                                    <div class="text-center">
+                                        <h2 ><?php echo $view->chargePoints->getCost(); ?></h2>
+                                        <h1><?php echo $view->chargePoints->getAddress1(); ?></h1>
+                                        <?php echo $view->chargePoints->getaddress2(); ?><br><br>
+                                        <b><?php echo $view->chargePoints->getName(); ?><br>
+                                        <?php echo $view->chargePoints->getPhoneNo(); ?></b>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+</section>
+
+<?php require('template/footer.phtml') ?>
+

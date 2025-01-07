@@ -1,0 +1,72 @@
+<?php require('template/header.phtml') ?>
+<div class="container-xl pt-3">
+<div class="card rounded-3 text-black">
+    <div class="row justify-content-center" >
+        <div class="col-lg-6">
+            <div class="card-body p-md-5 mx-md-4">
+
+                <div class="text-center">
+                    <img src="images/electricbolt.jpg"
+                         style="width: 100px;" alt="logo">
+                    <h4 >Welcome to Borrow My Charger!</h4>
+                </div>
+
+                <!--form for registering a new user-->
+
+                <form id="signup-form" >
+                    <div class="text-center">
+                        <p>Register</p>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="name" name="full-name" class="form-control"
+                               placeholder="Full Name" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="email" name="username" class="form-control"
+                               placeholder="username (email)" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                    <div class="row">
+                        <div class="col">
+                            <input type="password" id="pwd1" name=pwd1 class="form-control" placeholder="password" aria-label="password"
+                                   />
+                        </div>
+                        <div class="col">
+                            <input type="password" id="pwd2" name=pwd2 class="form-control" placeholder="repeat password" aria-label="password"
+                                   />
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="phone-number" name="phoneNo" class="form-control" placeholder="phone number" maxlength="11"
+                               />
+                    </div>
+
+
+                <p id="error-message" class="text-center text-danger"></p>
+
+                    <div class="text-center pt-1 mb-5 pb-1">
+                        <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"> Sign Up </button>
+                    </div>
+
+                    <!--button to redirect user to sign-up page-->
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                        <p class="mb-0 me-2">Already have an account?</p>
+                        <a href="index.php"><button type="button" class="btn btn-primary">Login</button></a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="js/signup.js"></script>
+
+<?php require('template/footer.phtml') ?>
